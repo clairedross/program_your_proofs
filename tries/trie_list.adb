@@ -260,6 +260,13 @@ package body Trie_List with SPARK_Mode is
             end loop;
 
             if I /= K'Last then
+               if B.Data.Children = null then
+                  B.Data.Children := new List_Cell'
+                    (Key  => K (I + 1),
+                     Data => (Value => 0, Children => null),
+                     Next => null);
+                  Lemma_Empty_Trie (B.Data.Children);
+               end if;
                B := B.Data.Children;
             end if;
          end loop;
